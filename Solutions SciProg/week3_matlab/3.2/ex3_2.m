@@ -1,0 +1,41 @@
+%Aitken acceleration of x-sequences
+axs=aitken(xs);
+axn=aitken(xn);
+axb=aitken(xb);
+
+%error sequences
+exs=abs(xs(2:length(xs))-xs(1:length(xs)-1));
+exn=abs(xn(2:length(xn))-xn(1:length(xn)-1));
+exb=abs(xb(2:length(xb))-xb(1:length(xb)-1));
+eaxs=abs(axs(2:length(axs))-axs(1:length(axs)-1));
+eaxn=abs(axn(2:length(axn))-axn(1:length(axn)-1));
+eaxb=abs(axb(2:length(axb))-axb(1:length(axb)-1));
+
+%Order of convergence sequences
+pxs=(log(exs(3:length(exs)))-log(exs(2:length(exs)-1)))./(log(exs(2:length(exs)-1))-log(exs(1:length(exs)-2)));
+pxn=(log(exn(3:length(exn)))-log(exn(2:length(exn)-1)))./(log(exn(2:length(exn)-1))-log(exn(1:length(exn)-2)));
+pxb=(log(exb(3:length(exb)))-log(exb(2:length(exb)-1)))./(log(exb(2:length(exb)-1))-log(exb(1:length(exb)-2)));
+paxs=(log(eaxs(3:length(eaxs)))-log(eaxs(2:length(eaxs)-1)))./(log(eaxs(2:length(eaxs)-1))-log(eaxs(1:length(eaxs)-2)));
+paxn=(log(eaxn(3:length(eaxn)))-log(eaxn(2:length(eaxn)-1)))./(log(eaxn(2:length(eaxn)-1))-log(eaxn(1:length(eaxn)-2)));
+paxb=(log(eaxb(3:length(eaxb)))-log(eaxb(2:length(eaxb)-1)))./(log(eaxb(2:length(eaxb)-1))-log(eaxb(1:length(eaxb)-2)));
+
+loglog([1:length(exs)],exs,'red')
+hold on
+loglog([1:length(exn)],exn,'blue')
+loglog([1:length(exb)],exb,'green')
+loglog([1:length(eaxs)],eaxs,'--')
+loglog([1:length(eaxn)],eaxn,'--')
+loglog([1:length(eaxb)],eaxb,'--')
+legend('Secant','Newton','Bisection','Secant Aitken','Newton Aitken','Bisection Aitken');
+
+figure(2)
+%order of convergence vs nr. iterations
+loglog([1:length(pxs)],pxs,'red')
+hold on
+loglog([1:length(pxn)],pxn,'blue')
+loglog([1:length(pxb)],pxb,'green')
+loglog([1:length(paxs)],paxs,'--')
+loglog([1:length(paxn)],paxn,'--')
+loglog([1:length(paxb)],paxb,'--')
+legend('Secant','Newton','Bisection','Secant Aitken','Newton Aitken','Bisection Aitken');
+

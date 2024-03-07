@@ -1,0 +1,6 @@
+function B = chessboard(n)
+%
+B = ones(n);
+B(1:2:n,1:2:n)=
+B(2:2:n,2:2:n)=1
+end

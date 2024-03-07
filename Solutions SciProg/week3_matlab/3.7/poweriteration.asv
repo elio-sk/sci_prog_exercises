@@ -1,0 +1,29 @@
+function [la,y]=poweriteration(A,I,J,a,m,x0,tol)
+if(sum(x0(x0==0))==length(x0) || isempty(x0)==1)
+    error('Input x0 accordingly.')
+end
+for i=1:length(A)
+    for j=1:length(A)
+        if A(i,j)~=A(j,i)
+            error('Input matrix A is not symmetric')
+        end
+    end
+end
+j=1;
+y=mvmsparse(I,J,a,m,x0)/norm(mvmsparse(I,J,a,m,x0));
+la(1)=dot(y,mvmsparse(I,J,a,m,x0));
+while (norm(b-la*y)<=tol)
+    j=j+1;
+    b=mvmsparse(I,J,a,m,y);
+    y=b/norm(b);
+    la(j)=dot(y,b);
+        if (abs(la(j))<=tol && abs(la(j-1)-la(j))<=tol)
+            break;
+        elseif (abs(la(j-1)-la(j))<=tol*abs(la(j)))
+            break;
+        end
+end
+disp(la)
+end
+
+
